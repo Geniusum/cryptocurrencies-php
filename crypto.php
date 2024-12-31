@@ -1,6 +1,4 @@
 <?php
-require_once '/var/www/html/jpgraph/src/jpgraph.php';
-require_once '/var/www/html/jpgraph/src/jpgraph_line.php';
 
 $selected_crypto = ["bitcoin", "bitcoin-cash", "ethereum", "cardano", "stellar", "litecoin", "eos"];  // 8 cryptomonnaies choisis, chacun d'eux a sa table dans la base de donnée distribué
 
