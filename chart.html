@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Graphique Chart.js</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div style="width: 80%; margin: auto;">
+        <canvas id="cryptoChart"></canvas>
+    </div>
+    <script>
+        // Données PHP transformées en JSON pour Chart.js
+        const timestamps = ["2024-12-31 13:49:31","2024-12-31 15:42:35","2024-12-31 16:09:55","2024-12-31 16:16:58","2024-12-31 16:26:36"]; // Axe X : Timestamps
+        const values = [95488.37599162656,95538.07573352363,95108.48883144885,95224.00298618196,94986.68496410293];         // Axe Y : Valeurs
+
+        // Configuration du graphique
+        const ctx = document.getElementById('cryptoChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'line', // Type de graphique
+            data: {
+                labels: timestamps, // Axe X : Timestamps
+                datasets: [{
+                    label: 'Valeurs',
+                    data: values, // Axe Y : Valeurs
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderWidth: 2,
+                    tension: 0.4 // Lissage de la courbe
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Temps',
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Valeur',
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

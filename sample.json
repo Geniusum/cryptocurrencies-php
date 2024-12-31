@@ -1,0 +1,103 @@
+{
+    "data": [
+        {
+            "id": "bitcoin",
+            "rank": "1",
+            "symbol": "BTC",
+            "name": "Bitcoin",
+            "supply": "19803743.0000000000000000",
+            "maxSupply": "21000000.0000000000000000",
+            "marketCapUsd": "1891027257625.5425430930101032",
+            "volumeUsd24Hr": "16070689886.4083372265322871",
+            "priceUsd": "95488.3759916265598424",
+            "changePercent24Hr": "2.6843584343499535",
+            "vwap24Hr": "93052.0604234052848326",
+            "explorer": "https://blockchain.info/"
+        },
+        {
+            "id": "ethereum",
+            "rank": "2",
+            "symbol": "ETH",
+            "name": "Ethereum",
+            "supply": "120472682.0703092200000000",
+            "maxSupply": null,
+            "marketCapUsd": "412404421305.7508280621973812",
+            "volumeUsd24Hr": "7911777043.5314041612891224",
+            "priceUsd": "3423.2193906421618705",
+            "changePercent24Hr": "2.1365039681521830",
+            "vwap24Hr": "3355.7246591945479229",
+            "explorer": "https://etherscan.io/"
+        },
+        {
+            "id": "cardano",
+            "rank": "10",
+            "symbol": "ADA",
+            "name": "Cardano",
+            "supply": "35139781273.9134900000000000",
+            "maxSupply": "45000000000.0000000000000000",
+            "marketCapUsd": "30547995540.8017247507989634",
+            "volumeUsd24Hr": "411861637.7446743948652329",
+            "priceUsd": "0.8693279933270233",
+            "changePercent24Hr": "1.6903561061737499",
+            "vwap24Hr": "0.8553051728693087",
+            "explorer": "https://cardanoexplorer.com/"
+        },
+        {
+            "id": "stellar",
+            "rank": "17",
+            "symbol": "XLM",
+            "name": "Stellar",
+            "supply": "30280010404.0481570000000000",
+            "maxSupply": "50001806812.0000000000000000",
+            "marketCapUsd": "10298730449.0246281439924682",
+            "volumeUsd24Hr": "155289578.9138704781209361",
+            "priceUsd": "0.3401164765665927",
+            "changePercent24Hr": "2.7852525050153875",
+            "vwap24Hr": "0.3306535496713929",
+            "explorer": "https://dashboard.stellar.org/"
+        },
+        {
+            "id": "bitcoin-cash",
+            "rank": "18",
+            "symbol": "BCH",
+            "name": "Bitcoin Cash",
+            "supply": "19809331.2500000000000000",
+            "maxSupply": "21000000.0000000000000000",
+            "marketCapUsd": "8949701233.1316751367329656",
+            "volumeUsd24Hr": "95656299.9738261246710172",
+            "priceUsd": "451.7921943039684965",
+            "changePercent24Hr": "2.2363602942590363",
+            "vwap24Hr": "440.8082618374330567",
+            "explorer": "https://blockchair.com/bitcoin-cash/blocks"
+        },
+        {
+            "id": "litecoin",
+            "rank": "21",
+            "symbol": "LTC",
+            "name": "Litecoin",
+            "supply": "75367474.5541093600000000",
+            "maxSupply": "84000000.0000000000000000",
+            "marketCapUsd": "7780828288.5101269117282799",
+            "volumeUsd24Hr": "267890632.5008749791094770",
+            "priceUsd": "103.2385433443700625",
+            "changePercent24Hr": "2.7988165800117595",
+            "vwap24Hr": "99.7525892173708376",
+            "explorer": "http://explorer.litecoin.net/chain/Litecoin"
+        },
+        {
+            "id": "eos",
+            "rank": "52",
+            "symbol": "EOS",
+            "name": "EOS",
+            "supply": "1537126862.1370000000000000",
+            "maxSupply": null,
+            "marketCapUsd": "1221368788.8336555228510878",
+            "volumeUsd24Hr": "57105370.8529814272939798",
+            "priceUsd": "0.7945790415344379",
+            "changePercent24Hr": "2.3874298472573548",
+            "vwap24Hr": "0.7686232349489062",
+            "explorer": "https://bloks.io/"
+        }
+    ],
+    "timestamp": 1735652971238
+}
