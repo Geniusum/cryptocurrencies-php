@@ -5,7 +5,7 @@
 require "crypto.php";
 
 $pdo = get_pdo();
-$selected_columns = ["priceUsd", "supply", "volumeUsd24Hr", "changePercent24Hr", "vwap24Hr", "marketCapUsd"];
+$selected_columns = ["priceUsd", "supply", "volumeUsd24Hr", "changePercent24Hr", "vwap24Hr", "rank", "marketCapUsd"];
 
 $selcrypto = $_GET["crypto"] ?? null;
 $selcolumn = $_GET["column"] ?? null;
@@ -295,11 +295,12 @@ $filename = "dashboard2.php";
             <?php
 
             foreach ($selected_columns as $column) {
+                $columnDisplayName = get_display_name($column);
                 echo <<<HTML
                     <li class="nav-item">
                         <a class="nav-link d-flex align-items-center gap-2" href="?crypto={$selcrypto}&column={$column}">>
                             <svg class="bi"><use xlink:href="#graph-up"/></svg>
-                            {$column}
+                            {$columnDisplayName}
                         </a>
                     </li>
                 HTML;
@@ -307,6 +308,33 @@ $filename = "dashboard2.php";
 
             ?>
           </ul>
+
+        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-body-secondary text-uppercase">
+        <span>Values</span>
+        </h6>
+
+        <ul class="nav flex-column mb-auto">
+        <?php
+
+        $selected_columns_2 = ["id", "symbol", "explorer", "priceUsd", "supply", "volumeUsd24Hr", "changePercent24Hr", "vwap24Hr", "rank", "marketCapUsd"];
+
+        foreach ($selected_columns_2 as $column) {
+            $columnDisplayName = get_display_name($column);
+            $all_column_data = get_all_column_data($selcrypto, $column);
+            $last_column_value = end($all_column_data)["column"]; // sprintf("%.3f", end($all_column_data)["column"]);
+            if ($column == "explorer") {
+                $last_column_value = "<a href=" . $last_column_value . ">" . $last_column_value . "</a>";
+            }
+            echo <<<HTML
+                <li class="nav-item">
+                    <span class="nav-link d-flex align-items-center gap-2" style="color: #464646;">{$columnDisplayName} : <span style="font-weight: bold;">{$last_column_value}</span></span>
+                </li>
+            HTML;
+        }
+
+        ?>
+        </ul>
+        <br><br>
         </div>
       </div>
     </div>
@@ -316,8 +344,24 @@ $filename = "dashboard2.php";
         <h1 class="h2">Dashboard</h1>
         <div class="btn-toolbar mb-2 mb-md-0">
           <div class="btn-group me-2">
-            <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
-            <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
+            <?php
+
+            if ($selstart == null or $selend == null) {
+                $selstart = 0;
+                $selend = time();
+            }
+
+            ?>
+            <a id="json_export"><button type="button" class="btn btn-sm btn-outline-secondary">Export JSON</button></a>
+            <a id="chart_export"><button type="button" class="btn btn-sm btn-outline-secondary">Export graph</button></a>
+            <script>
+                const filename = '<?php echo $selcrypto . "_" . $selcolumn; ?>.json';
+                const jsonStr = JSON.stringify(JSON.parse("<?php echo str_replace("\"", "\\\"", json_encode(get_all_column_data_limit($selcrypto, $selcolumn, $selstart, $selend))); ?>"));
+
+                let element = document.querySelector("a#json_export");
+                element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(jsonStr));
+                element.setAttribute('download', filename);
+            </script>
           </div>
           <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle d-flex align-items-center gap-1" id="calendarButton">
             <svg class="bi"><use xlink:href="#calendar3"/></svg>
@@ -350,9 +394,13 @@ if (isset($selcrypto) && !isset($selcolumn)) {
 } else {
     try {
         $type = "line";
-        echo "<h2 style='text-transform:capitalize; font-weight: bold;'>$selcrypto - $selcolumn</h3><br>\n";
+        $selcolumn_display_name = get_display_name($selcolumn);
+        echo "<h2 style='text-transform:capitalize; font-weight: bold;'>$selcrypto - $selcolumn_display_name</h3><br>\n";
+        $all_column_data = get_all_column_data_limit($selcrypto, $selcolumn, $selstart, $selend);
         switch ($selcolumn) {
             case "supply":
+                $type = "bar";
+                $all_column_data = array_merge($all_column_data, get_all_column_data_limit($selcrypto, "maxSupply", $selstart, $selend));
                 break;
             case "volumeUsd24Hr":
                 $type = "bar";
@@ -364,26 +412,12 @@ if (isset($selcrypto) && !isset($selcolumn)) {
                 $type = "bar";
                 break;
             default:
-                /* $z = [];
-                $i = 0;
-                $column_data = get_all_column_data($selcrypto, $selcolumn);
-                foreach ($column_data as $data) {
-                    $t = date('Y-m-d\TH:i:s\Z', end($column_data)["timestamp"]);
-                    $o = $column_data[0]["column"];  // Open
-                    $c = end($column_data)["column"];  // Close
-                    $columns = array_map(fn($row) => $row['column'], array_slice($column_data, 0, $i + 1));
-                    $h = max($columns);  // High
-                    $l = min($columns);  // Low
-                    $z[] = ["t" => $t, "o" => $o, "c" => $c, "h" => $h, "l" => $l];
-                    $i++;
-                }
-                generate_candlestick_chart($selcrypto . "_" . $selcolumn, $z, "calc(100vh - 230px)"); */
-            break;
+                break;
         }
-        if (!isset($selstart) or !isset($selend)) {
-            generate_graph_for_column($selcrypto . "_" . $selcolumn, get_all_column_data($selcrypto, $selcolumn), "calc(100vh - 230px)", $type);
+        if ($selcolumn == "supply") {
+            generate_graph_for_multiple_columns($all_column_data, "calc(100vh - 230px)", $type);
         } else {
-            generate_graph_for_column($selcrypto . "_" . $selcolumn, get_all_column_data_limit($selcrypto, $selcolumn, $selstart, $selend), "calc(100vh - 230px)", $type);
+            generate_graph_for_column($all_column_data, "calc(100vh - 230px)", $type);
         }
     } catch (Exception $e) {
         echo "Error: " . $e->getMessage();
@@ -440,6 +474,11 @@ if (isset($selcrypto) && !isset($selcolumn)) {
                 }
             }
         });
+    setTimeout(() => {
+        var char_export_a = document.querySelector('a#chart_export');
+        char_export_a.href = cryptoChart.toBase64Image();
+        char_export_a.download = '<?php echo $selcrypto . "_" . $selcolumn; ?>.png';
+    }, 3000);
     </script>
 
 <script src="https://getbootstrap.com/docs/5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>

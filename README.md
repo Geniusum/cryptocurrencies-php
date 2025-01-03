@@ -22,13 +22,13 @@ Champs donnés par l'API :
 - `rank` rang de la cryptomonnaie par rapport à la capitalisation boursière.
 - `symbol` sombole de la cryptomonnaie
 - `name` nom propre de la cryptomonnaie
-- `supply` nombre de tokens circulent sur le marché de cette cryptomonnaie.
+- `supply` nombre de tokens circulant sur le marché de cette cryptomonnaie.
 - `maxSupply` nombre de tokens disponible maximum sur le marché de cette cryptomonnaie (exemple: 21M de Bitcoins).
 - `marketCapUsd` produit du nombre de tokens (`supply`) et du prix d'un token (`priceUsd`).
 - `volumeUsd24Hr` **quantité de volume échangé en USD dans les dernière 24 heures.**
 - `priceUsd` prix d'un token en USD.
 - `changePercent24Hr` pourcentage de changement + direction dans les dernières 24 heures.
-- `vwap24Hr` prix moyen dans les dernière 24 heures.
+- `vwap24Hr` prix moyen dans les dernières 24 heures.
 
 Structure d'une réponse de l'API :
 ```json
