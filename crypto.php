@@ -4,11 +4,7 @@ require_once '/var/www/html/jpgraph/src/jpgraph_line.php';
 
 $selected_crypto = ["bitcoin", "bitcoin-cash", "ethereum", "cardano", "stellar", "litecoin", "eos"];  // 8 cryptomonnaies choisis, chacun d'eux a sa table dans la base de donnée distribué
 
-// Connection base de donnée MYSQL
-$host = "51.178.36.249";
-$username = "cryptowatch2";
-$password = "059012135%%";
-$dbname = "cryptowatch";
+// Connection base de donn
 
 function get_api_json() { // Fonction pour récupérer la réponse JSON de CoinCap API
     global $selected_crypto;
